@@ -7,16 +7,7 @@
 
 import UIKit
 import SnapKit
-
-// MARK: - Building Model
-
-private struct Building {
-    let title: String
-    let subtitle: String
-    // TODO: Замените координаты на реальные
-    let latitude: Double
-    let longitude: Double
-}
+import Foundation
 
 // MARK: - MapViewController
 
@@ -25,11 +16,11 @@ final class MapViewController: UIViewController {
     // MARK: - Data
 
     private let buildings: [Building] = [
-        // ⬇️ КООРДИНАТЫ: замените latitude/longitude на реальные значения
-        Building(title: "ФЭУП - Корпус 1", subtitle: "Перейти", latitude: 47.101420, longitude: 37.525576),
-        Building(title: "ФФМК - Корпус 2", subtitle: "Перейти", latitude: 47.102119, longitude: 37.525756),
-        Building(title: "ПФ - Корпус 3-4", subtitle: "Перейти", latitude: 47.109443, longitude: 37.530238),
-        Building(title: "ФГСН - Корпус 5", subtitle: "Перейти", latitude: 47.099420, longitude: 37.536302),
+        // latitude/longitude координаты геопозиции
+        Building(title: "Факультет экономики, управления и права \n Корпус 1", subtitle: "Перейти", latitude: 47.101420, longitude: 37.525576),
+        Building(title: "Факультет филологии и массовых коммуникаций \n Корпус 2", subtitle: "Перейти", latitude: 47.102119, longitude: 37.525756),
+        Building(title: "Педагогический факультет \n Корпус 3-4", subtitle: "Перейти", latitude: 47.109443, longitude: 37.530238),
+        Building(title: "Факультет гуманитарных и социальных наук \n Корпус 5", subtitle: "Перейти", latitude: 47.099420, longitude: 37.536302),
     ]
 
     // MARK: - UI
@@ -85,6 +76,7 @@ final class MapViewController: UIViewController {
         titleLabel.text = building.title
         titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
         titleLabel.textColor = .label
+        titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .center
 
         let subtitleLabel = UILabel()
