@@ -32,41 +32,70 @@ final class SettingsViewController: UIViewController {
     }()
     
     private lazy var Button1: UIButton = {
-            let button = UIButton(type: .system)
-            button.setTitle("Фамилия и имя", for: .normal)
-            button.setTitleColor(.systemGray6, for: .normal)
-            button.backgroundColor = .systemBlue
-            button.layer.cornerRadius = 10
-            button.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
-            return button
-        }()
+        let button = UIButton(type: .system)
+        button.setTitle("Фамилия и имя", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .medium)
+        button.backgroundColor = UIColor { traitCollection in
+            return traitCollection.userInterfaceStyle == .dark
+            ? .systemGray5
+            : .white
+        }
+        button.setTitleColor(.label, for: .normal)
+        // Добавление тени
+        button.layer.cornerRadius = 12
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowRadius = 4
+        button.layer.shadowOpacity = 0.1
+        
+        button.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
+        return button
+    }()
     
     private lazy var Button2: UIButton = {
-            let button = UIButton(type: .system)
-            button.setTitle("Номер телефона", for: .normal)
-            button.setTitleColor(.systemGray6, for: .normal)
-            button.backgroundColor = .systemBlue
-            button.layer.cornerRadius = 10
-            button.addTarget(self, action: #selector(showAlertNumberPhone), for: .touchUpInside)
-            return button
+        let button = UIButton(type: .system)
+        button.setTitle("Номер телефона", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .medium)
+        button.backgroundColor = UIColor { traitCollection in
+            return traitCollection.userInterfaceStyle == .dark
+            ? .systemGray5
+            : .white
+        }
+        button.setTitleColor(.label, for: .normal)
+        button.layer.cornerRadius = 12
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowRadius = 4
+        button.layer.shadowOpacity = 0.1
+        
+        button.addTarget(self, action: #selector(showAlertNumberPhone), for: .touchUpInside)
+        return button
         }()
     
     private lazy var Button3: UIButton = {
-            let button = UIButton(type: .system)
-            button.setTitle("Электронная почта", for: .normal)
-            button.setTitleColor(.systemGray6, for: .normal)
-            button.backgroundColor = .systemBlue
-            button.layer.cornerRadius = 10
-            button.addTarget(self, action: #selector(showAlertEmail), for: .touchUpInside)
-            return button
+        let button = UIButton(type: .system)
+        button.setTitle("Электронная почта", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .medium)
+        button.backgroundColor = UIColor { traitCollection in
+            return traitCollection.userInterfaceStyle == .dark
+            ? .systemGray5
+            : .white
+        }
+        button.setTitleColor(.label, for: .normal)
+        button.layer.cornerRadius = 12
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowRadius = 4
+        button.layer.shadowOpacity = 0.1
+        
+        button.addTarget(self, action: #selector(showAlertEmail), for: .touchUpInside)
+        return button
         }()
     
     private let Button4: UIButton = {
             let button = UIButton(type: .system)
             button.setTitle("Уведомления", for: .normal)
-            button.setTitleColor(.systemGray6, for: .normal)
-            button.backgroundColor = .systemBlue
-            button.layer.cornerRadius = 10
+            button.titleLabel?.font = .systemFont(ofSize: 15, weight: .medium)
             return button
         }()
     
@@ -86,11 +115,18 @@ final class SettingsViewController: UIViewController {
     
     private lazy var Button5: UIButton = {
             let button = UIButton(type: .system)
-            button.setTitle("Сбросить данные", for: .normal)
-            button.setTitleColor(.systemGray6, for: .normal)
+            button.setTitle("Сброс данных", for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 15, weight: .medium)
             button.backgroundColor = .systemRed
-            button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(resetData), for: .touchUpInside)
+            button.layer.cornerRadius = 12
+            button.setTitleColor(.white, for: .normal)
+            button.layer.cornerRadius = 12
+            button.layer.shadowColor = UIColor.black.cgColor
+            button.layer.shadowOffset = CGSize(width: 0, height: 2)
+            button.layer.shadowRadius = 4
+            button.layer.shadowOpacity = 0.1
+        
+            button.addTarget(self, action: #selector(resetData), for: .touchUpInside)
             return button
         }()
     
@@ -101,7 +137,6 @@ final class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         notificationSwitch.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
         avatarImageView.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(selectPhoto))
@@ -216,12 +251,11 @@ extension SettingsViewController {
     
     private func setupConstraints() {
         notificationLabel.snp.makeConstraints { make in
-                make.leading.equalTo(Button1.snp.leading) // Выравниваем по левому краю кнопок
-                make.centerY.equalTo(Button4.snp.centerY) // Центрируем по вертикали относительно места 4-й кнопки
+                make.leading.equalTo(Button1.snp.leading)
+                make.centerY.equalTo(Button4.snp.centerY)
             }
-            
             notificationSwitch.snp.makeConstraints { make in
-                make.trailing.equalTo(Button1.snp.trailing) // Выравниваем по правому краю
+                make.trailing.equalTo(Button1.snp.trailing)
                 make.centerY.equalTo(notificationLabel.snp.centerY)
             }
         avatarImageView.snp.makeConstraints{ make in
@@ -256,7 +290,7 @@ extension SettingsViewController {
             make.width.equalTo(300)
         }
         Button5.snp.makeConstraints { make in
-            make.top.equalTo(Button4.snp.bottom).offset(20)
+            make.top.equalTo(Button4.snp.bottom).offset(140)
             make.centerX.equalToSuperview()
             make.width.equalTo(300)
         }
@@ -265,7 +299,6 @@ extension SettingsViewController {
 }
 
 extension SettingsViewController: PHPickerViewControllerDelegate {
-    
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
         guard let provider = results.first?.itemProvider,
