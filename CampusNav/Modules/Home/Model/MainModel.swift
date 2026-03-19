@@ -38,16 +38,49 @@ struct ServiceItem: Hashable, Sendable {
     let id = UUID()
     let title: String
     let imageSystemName: String
+    let urlString: String
+
+    var url: URL? {
+        URL(string: urlString)
+    }
     
     static func makeMockData() -> [ServiceItem] {
         return [
-            ServiceItem(title: "Приёмная комиссия", imageSystemName: "calendar"),
-            ServiceItem(title: "Специальности", imageSystemName: "list.bullet.rectangle"),
-            ServiceItem(title: "Дополнительные образовательные программы", imageSystemName: "person.3.fill"),
-            ServiceItem(title: "Есть вопросы?", imageSystemName: "atom"),
-            ServiceItem(title: "Запрос в Управление цифровых технологий", imageSystemName: "wrench.and.screwdriver.fill"),
-            ServiceItem(title: "Образовательная система Moodle", imageSystemName: "book.fill"),
-            ServiceItem(title: "Электронная библиотека", imageSystemName: "books.vertical.fill")
+            ServiceItem(
+                title: "Приёмная комиссия",
+                imageSystemName: "calendar",
+                urlString: "https://mgumariupol.ru/abitur/priemnaya-komissiya/"
+            ),
+            ServiceItem(
+                title: "Специальности",
+                imageSystemName: "list.bullet.rectangle",
+                urlString: "https://mgumariupol.ru/abitur/specialties/"
+            ),
+            ServiceItem(
+                title: "Дополнительные образовательные программы",
+                imageSystemName: "person.3.fill",
+                urlString: "https://mgumariupol.ru/life/struktura-universiteta/otdel-profilnogo-i-dopolnitelnogo-obrazovaniya/"
+            ),
+            ServiceItem(
+                title: "Есть вопросы?",
+                imageSystemName: "atom",
+                urlString: "https://mgumariupol.ru/voprosy-i-otvety/"
+            ),
+            ServiceItem(
+                title: "Запрос в Управление цифровых технологий",
+                imageSystemName: "wrench.and.screwdriver.fill",
+                urlString: "http://help.mgu.corp/"
+            ),
+            ServiceItem(
+                title: "Образовательная система Moodle",
+                imageSystemName: "book.fill",
+                urlString: "https://skif.mgumariupol.ru/"
+            ),
+            ServiceItem(
+                title: "Электронная библиотека",
+                imageSystemName: "books.vertical.fill",
+                urlString: "http://ebd.mgumariupol.ru:85/cgi-bin/irbis64r_plus/cgiirbis_64_ft.exe?C21COM=F&I21DBN=EK_FULLTEXT&P21DBN=EK&Z21ID=&S21CNR=5"
+            )
         ]
     }
 }

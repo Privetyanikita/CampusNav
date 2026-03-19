@@ -28,7 +28,8 @@ final class ServiceCell: UICollectionViewCell {
         let element = UILabel()
         element.font = .systemFont(ofSize: 14, weight: .medium)
         element.textColor = .label
-        element.numberOfLines = 3
+        element.numberOfLines = 0
+        element.lineBreakMode = .byWordWrapping
         element.textAlignment = .center
         return element
     }()
@@ -57,7 +58,8 @@ final class ServiceCell: UICollectionViewCell {
 
     private func setupConstraints() {
         iconContainerView.snp.makeConstraints { make in
-            make.top.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(10)
+            make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: 68, height: 68))
         }
 
@@ -67,9 +69,9 @@ final class ServiceCell: UICollectionViewCell {
         }
 
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(iconContainerView.snp.bottom).offset(10)
+            make.top.equalTo(iconContainerView.snp.bottom).offset(5)
             make.leading.trailing.equalToSuperview().inset(4)
-            make.bottom.lessThanOrEqualToSuperview()
+            make.bottom.equalToSuperview().inset(4)
         }
     }
 }

@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SafariServices
 
 final class MainViewController: UIViewController {
     
@@ -45,14 +46,14 @@ final class MainViewController: UIViewController {
     }
     
     private func makeLayout() -> UICollectionViewCompositionalLayout {
-        UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
+        UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
             guard let self, let section = MainSection(rawValue: sectionIndex) else { return nil }
             
             switch section {
             case .hero:
                 return self.makeHeroSection()
             case .services:
-                return self.makeServicesSection()
+                return self.makeServicesSection(layoutEnvironment: layoutEnvironment)
             case .news:
                 return self.makeNewsSection()
             }
@@ -80,7 +81,13 @@ final class MainViewController: UIViewController {
         return section
     }
     
-    private func makeServicesSection() -> NSCollectionLayoutSection {
+    private func makeServicesSection(layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+        let horizontalInsets: CGFloat = 32
+        let interGroupSpacing: CGFloat = 10
+        let availableWidth = layoutEnvironment.container.effectiveContentSize.width - horizontalInsets
+        let targetCardWidth = ((availableWidth - (interGroupSpacing * 2)) / 3).rounded(.down)
+        let cardWidth = min(max(targetCardWidth, 130), 156)
+
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0)
@@ -88,13 +95,13 @@ final class MainViewController: UIViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(130),
-            heightDimension: .absolute(160)
+            widthDimension: .absolute(cardWidth),
+            heightDimension: .absolute(172)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 10
+        section.interGroupSpacing = interGroupSpacing
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 24, trailing: 16)
         section.boundarySupplementaryItems = [makeHeaderItem()]
@@ -214,17 +221,31 @@ final class MainViewController: UIViewController {
 
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+
         guard
             let section = MainSection(rawValue: indexPath.section),
-            section == .news,
-            let itemId = dataSource?.itemIdentifier(for: indexPath),
-            let news = newsItemsById[itemId]
-        else {
+            let itemId = dataSource?.itemIdentifier(for: indexPath)
+        else { return }
+
+        switch section {
+        case .hero:
             return
+        case .services:
+            guard
+                let service = serviceItemsById[itemId],
+                let url = service.url
+            else { return }
+
+            let browserViewController = SFSafariViewController(url: url)
+            browserViewController.dismissButtonStyle = .close
+            browserViewController.modalPresentationStyle = .pageSheet
+            present(browserViewController, animated: true)
+        case .news:
+            guard let news = newsItemsById[itemId] else { return }
+            let detailViewController = NewsDetailViewController(newsItem: news)
+            navigationController?.pushViewController(detailViewController, animated: true)
         }
-        
-        let detailViewController = NewsDetailViewController(newsItem: news)
-        navigationController?.pushViewController(detailViewController, animated: true)
     }
     
     private func setupConstraints() {
