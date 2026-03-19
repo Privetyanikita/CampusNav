@@ -13,7 +13,7 @@ final class TabBarCoordinator: Coordinator {
     let tabBarController = UITabBarController()
 
     func start() {
-        let homeVC = HomeViewController()
+        let homeVC = MainViewController()
         homeVC.title = "Главная"
         homeVC.navigationItem.largeTitleDisplayMode = .always
         let homeNav = UINavigationController(rootViewController: homeVC)
