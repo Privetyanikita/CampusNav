@@ -65,18 +65,6 @@
 
 ---
 
-## 📸 Скриншоты
-
-*(Добавьте скриншоты вашего приложения сюда, поместив картинки в проект и заменив ссылки)*
-
-<div align="center">
-  <img src="https://via.placeholder.com/250x500.png?text=Main+Screen" alt="Главный экран" width="25%" />
-  <img src="https://via.placeholder.com/250x500.png?text=Map+Screen" alt="Карта корпусов" width="25%" />
-  <img src="https://via.placeholder.com/250x500.png?text=Tasks+Screen" alt="Экран заданий" width="25%" />
-</div>
-
----
-
 <div align="center">
   <i>Разработано для студентов и абитуриентов</i> 🎓
 </div>
