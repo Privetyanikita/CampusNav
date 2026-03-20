@@ -15,7 +15,9 @@ enum Images {
         static let newsFourImage: UIImage = .theOpenDay
     }
     enum CampusPhotoCell {
-        static let firstImage: UIImage = .firstCampus
-        static let secondImage: UIImage = .secondCampus
+        static let firstImage: String = "firstCampus"
+        static let secondImage: String = "secondCampus"
+        static let thirdImage: String = "thirdCampus"
+        static let fifthImage: String = "fivethCampus"
     }
 }

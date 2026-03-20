@@ -7,5 +7,5 @@ struct Building {
     let subtitle: String
     let latitude: Double
     let longitude: Double
-    let imageName: String?
+    let imageAssetName: String?
 }

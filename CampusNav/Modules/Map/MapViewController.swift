@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import Foundation
 
 // MARK: - MapViewController
 
@@ -16,11 +15,10 @@ final class MapViewController: UIViewController {
     // MARK: - Data
 
     private let buildings: [Building] = [
-        // latitude/longitude координаты геопозиции
-        Building(title: "Факультет экономики, управления и права \n Корпус 1", subtitle: "Перейти", latitude: 47.101420, longitude: 37.525576, imageName: "firstCampus"),
-        Building(title: "Факультет филологии и массовых коммуникаций \n Корпус 2", subtitle: "Перейти", latitude: 47.102119, longitude: 37.525756, imageName: "secondCampus"),
-        Building(title: "Педагогический факультет \n Корпус 3-4", subtitle: "Перейти", latitude: 47.109443, longitude: 37.530238, imageName: nil),
-        Building(title: "Факультет гуманитарных и социальных наук \n Корпус 5", subtitle: "Перейти", latitude: 47.099420, longitude: 37.536302, imageName: nil),
+        Building(title: "Факультет экономики, управления и права \n Корпус 1", subtitle: "Перейти", latitude: 47.101420, longitude: 37.525576, imageAssetName: Images.CampusPhotoCell.firstImage),
+        Building(title: "Факультет филологии и массовых коммуникаций \n Корпус 2", subtitle: "Перейти", latitude: 47.102119, longitude: 37.525756, imageAssetName: Images.CampusPhotoCell.secondImage),
+        Building(title: "Педагогический факультет \n Корпус 3-4", subtitle: "Перейти", latitude: 47.109443, longitude: 37.530238, imageAssetName: Images.CampusPhotoCell.thirdImage),
+        Building(title: "Факультет гуманитарных и социальных наук \n Корпус 5", subtitle: "Перейти", latitude: 47.099420, longitude: 37.536302, imageAssetName: Images.CampusPhotoCell.fifthImage),
     ]
 
     // MARK: - UI
@@ -149,15 +147,44 @@ extension MapViewController {
         mainStack.alignment = .fill
         mainStack.isUserInteractionEnabled = false
         
-        if let imageName = building.imageName, let image = UIImage(named: imageName) {
-            let imageView = UIImageView(image: image)
+        if let assetName = building.imageAssetName {
+            let imageView = UIImageView()
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
             imageView.layer.cornerRadius = 8
+            imageView.backgroundColor = .tertiarySystemGroupedBackground
             imageView.snp.makeConstraints { make in
                 make.height.equalTo(140)
             }
             mainStack.addArrangedSubview(imageView)
+            
+            let activityIndicator = UIActivityIndicatorView(style: .medium)
+            activityIndicator.color = .secondaryLabel
+            activityIndicator.hidesWhenStopped = true
+            imageView.addSubview(activityIndicator)
+            activityIndicator.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+            }
+            activityIndicator.startAnimating()
+            
+            DispatchQueue.global(qos: .userInitiated).async {
+                guard let image = UIImage(named: assetName) else {
+                    DispatchQueue.main.async {
+                        activityIndicator.stopAnimating()
+                    }
+                    return
+                }
+                let renderer = UIGraphicsImageRenderer(size: image.size)
+                let decoded = renderer.image { _ in
+                    image.draw(at: .zero)
+                }
+                DispatchQueue.main.async {
+                    activityIndicator.stopAnimating()
+                    UIView.transition(with: imageView, duration: 0.2, options: .transitionCrossDissolve) {
+                        imageView.image = decoded
+                    }
+                }
+            }
         }
         
         mainStack.addArrangedSubview(textStack)

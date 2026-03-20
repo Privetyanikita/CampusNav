@@ -1,3 +1,14 @@
+//
+//  TaskDetailViewController.swift
+//  CampusNav
+//
+//  Created by Nikita on 20.03.2026.
+//
+
+
+import UIKit
+import SnapKit
+
 final class TaskDetailViewController: UIViewController {
     private let task: (t: String, s: String, d: String, task: String, isUrgent: Bool)
     

@@ -159,9 +159,7 @@ final class MainViewController: UIViewController {
         let headerRegistration = UICollectionView.SupplementaryRegistration<SectionHeaderView>(
             elementKind: UICollectionView.elementKindSectionHeader
         ) { [weak self] supplementaryView, _, indexPath in
-            guard
-                let self,
-                let section = MainSection(rawValue: indexPath.section)
+            guard let self, let section = MainSection(rawValue: indexPath.section)
             else { return }
             
             supplementaryView.configure(title: section.title ?? "")
