@@ -5,31 +5,18 @@
 //  Created by Nikita on 13.03.2026.
 //
 
-import Foundation
+import UIKit
 
 struct HeroItem: Hashable, Sendable {
     let id = UUID()
-    let title: String
-    let subtitle: String
-    let imageSystemName: String
+    let image: UIImage?
     
     static func makeMockData() -> [HeroItem] {
         return [
-            HeroItem(
-                title: "Поступление 2026",
-                subtitle: "Проверьте сроки, проходные баллы и список документов",
-                imageSystemName: "graduationcap.fill"
-            ),
-            HeroItem(
-                title: "Олимпиады и конкурсы",
-                subtitle: "Следите за новыми возможностями для абитуриентов",
-                imageSystemName: "trophy.fill"
-            ),
-            HeroItem(
-                title: "Расписание консультаций",
-                subtitle: "Запишитесь на встречу с представителем факультета",
-                imageSystemName: "calendar.badge.clock"
-            )
+            HeroItem(image: Images.NewsCell.newsImage),
+            HeroItem(image: Images.NewsCell.newsTwoImage),
+            HeroItem(image: Images.NewsCell.newsThreeImage),
+            HeroItem(image: Images.NewsCell.newsFourImage)
         ]
     }
 }
